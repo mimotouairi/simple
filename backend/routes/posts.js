@@ -9,7 +9,14 @@ const storage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, 'uploads/'),
   filename: (req, file, cb) => cb(null, `${Date.now()}-${path.basename(file.originalname)}`)
 });
-const upload = multer({ storage });
+
+// --- التعديل هنا: رفع الحد إلى 400MB ---
+const upload = multer({ 
+  storage,
+  limits: { 
+    fileSize: 400 * 1024 * 1024 // 400MB limit for video uploads
+  }
+});
 
 router.use(auth);
 
